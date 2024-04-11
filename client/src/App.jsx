@@ -9,17 +9,19 @@ function App() {
   const { data, isLoading, error } = useGetQuery(getAllNews, "allNews");
 
   if (isLoading) {
-      return <div className="flex justify-center items-center h-screen">Loading...</div>;
+    return <div className="flex justify-center items-center h-screen">Loading...</div>;
   }
 
   if (error) {
-      return <div className="flex justify-center items-center h-screen text-red-500">{error.message}</div>;
+    return <div className="flex justify-center items-center h-screen text-red-500">{error.message}</div>;
   }
 
   // Pass news data as a prop to NewsDetailsPage component
   return (
     <Router>
-      <Navbar />
+      <div className="mb-[100px]">
+        <Navbar />
+      </div>
       <Routes>
         <Route path="/" element={<NewsPost />} />
         <Route path="/news/:id" element={<NewsDetailsPage news={data.newsPost} />} />
