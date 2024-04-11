@@ -14,21 +14,13 @@ const Navbar = () => {
                     <span className={`block w-7 mt-2 h-[3px] bg-black ${isOpen ? '-rotate-45 -translate-y-[6px] transition duration-500' : 'block transition duration-500'}`}></span>
                 </button>
                 <ul className={`${isOpen ? 'block' : 'hidden'} absolute bg-white top-[68px] rounded-lg right-32 p-2`}>
-                    <span className="h-6 w-[2px] bg-black"></span>
                     <li className="text-lg px-1"><Link to="/">Alle</Link></li>
-                    <span className="h-6 w-[2px] bg-black"></span>
                     <li className="text-lg px-1"><Link to="/">Indland</Link></li>
-                    <span className="h-6 w-[2px] bg-black"></span>
                     <li className="text-lg px-1"><Link to="/">Udland</Link></li>
-                    <span className="h-6 w-[2px] bg-black"></span>
                     <li className="text-lg px-1"><Link to="/">Teknologi</Link></li>
-                    <span className="h-6 w-[2px] bg-black"></span>
                     <li className="text-lg px-1"><Link to="/">Sport</Link></li>
-                    <span className="h-6 w-[2px] bg-black"></span>
                     <li className="text-lg px-1"><Link to="/">Politik</Link></li>
-                    <span className="h-6 w-[2px] bg-black"></span>
                     <li className="text-lg px-1"><Link to="/">Samfund</Link></li>
-                    <span className="h-6 w-[2px] bg-black"></span>
                 </ul>
                 <ul className="lg:flex items-center hidden">
                     <span className="h-6 w-[2px] bg-black"></span>
