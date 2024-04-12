@@ -26,7 +26,7 @@ const NewsDetailsPage = ({ news }) => {
     return (
         <div className="my-4 mx-32">
             <div className="w-full bg-[#ffffff] rounded-lg shadow-lg mb-8">
-                <img src={newsDetails.image.url} alt="" className="w-full h-96 object-cover object-center rounded-b-lg" />
+                <img src={newsDetails.image.url} alt="" className="w-full h-96 object-cover object-center rounded-t-lg" />
                 <div className='p-4'>
                     <ReactMarkdown  className="text-2xl" components={components}>{newsDetails.heading.markdown}</ReactMarkdown>
                     <div className='flex text-[#C52525] mb-2'>

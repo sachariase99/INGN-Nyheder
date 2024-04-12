@@ -4,6 +4,7 @@ import { getAllNews } from "./queries/getAllNews";
 import NewsPost from "./components/NewsPost/NewsPost";
 import NewsDetailsPage from "./components/newsDetails/NewsDetails";
 import Navbar from "./components/navbar/Navbar";
+import Footer from "./components/footer/Footer";
 
 function App() {
   const { data, isLoading, error } = useGetQuery(getAllNews, "allNews");
@@ -26,6 +27,7 @@ function App() {
         <Route path="/" element={<NewsPost />} />
         <Route path="/news/:id" element={<NewsDetailsPage news={data.newsPost} />} />
       </Routes>
+      <Footer />
     </Router>
   );
 }
