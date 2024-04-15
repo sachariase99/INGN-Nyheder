@@ -4,8 +4,10 @@ import { useGetQuery } from "../../hooks/useGetQuery";
 import { getAllNews } from "../../queries/getAllNews";
 import ReactMarkdown from "react-markdown";
 import { Link } from "react-router-dom";
+import { FaEdit } from "react-icons/fa";
+import { MdDelete } from "react-icons/md";
 
-const NewsGrid = () => {
+const NewsGrid = ({ isLoggedIn }) => {
   const { data, isLoading, error } = useGetQuery(getAllNews, "allNews");
   const [news, setNews] = useState([]);
   const location = useLocation();
@@ -63,31 +65,39 @@ const NewsGrid = () => {
         return (
           <React.Fragment key={segmentIndex}>
             {/* Featured Post */}
-            {featuredPost && (
-              <div className="w-full bg-[#ffffff] rounded-lg shadow-lg mb-8">
-                <div className="p-4">
-                  <ReactMarkdown className="text-2xl">
-                    {featuredPost.heading.markdown}
-                  </ReactMarkdown>
-                  <ReactMarkdown>
-                    {featuredPost.shortDesc.markdown}
-                  </ReactMarkdown>
-                  <div className="flex text-[#C52525] mb-2">
-                    <p>{featuredPost.date}</p>
-                    <span className="mx-1">-</span>
-                    <ReactMarkdown>
-                      {featuredPost.author.markdown}
+              {featuredPost && (
+                <div className="w-full bg-[#ffffff] rounded-lg shadow-lg mb-8 relative">
+                  <div className="p-4">
+                    <ReactMarkdown className="text-2xl">
+                      {featuredPost.heading.markdown}
                     </ReactMarkdown>
+                    <ReactMarkdown>
+                      {featuredPost.shortDesc.markdown}
+                    </ReactMarkdown>
+                    <div className="flex text-[#C52525] mb-2">
+                      <p>{featuredPost.date}</p>
+                      <span className="mx-1">-</span>
+                      <ReactMarkdown>
+                        {featuredPost.author.markdown}
+                      </ReactMarkdown>
+                    </div>
+                    <Link to={`/news/${featuredPost.id}`}>Læs mere</Link>
                   </div>
-                  <Link to={`/news/${featuredPost.id}`}>Læs mere</Link>
+                  <img
+                    src={featuredPost.image.url}
+                    alt=""
+                    className="w-full h-96 object-cover object-center rounded-b-lg"
+                  />
+                  {isLoggedIn && (
+                    <div className="absolute top-0 right-0">
+                      <div className="p-4 flex justify-end text-xl text-[#C52525]">
+                        <FaEdit className="mr-2 cursor-pointer" />
+                        <MdDelete className="cursor-pointer" />
+                      </div>
+                    </div>
+                  )}
                 </div>
-                <img
-                  src={featuredPost.image.url}
-                  alt=""
-                  className="w-full h-96 object-cover object-center rounded-b-lg"
-                />
-              </div>
-            )}
+              )}
 
             {/* Grid Posts */}
             <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mt-4">
@@ -169,12 +179,12 @@ const NewsGrid = () => {
                     <ReactMarkdown className="text-xl font-bold">
                       {post.heading.markdown}
                     </ReactMarkdown>
-                    <ReactMarkdown>{post.shortDesc.markdown}</ReactMarkdown>
                     <div className="flex text-[#C52525] my-2">
                       <p>{post.date}</p>
                       <span className="mx-1">-</span>
                       <ReactMarkdown>{post.author.markdown}</ReactMarkdown>
                     </div>
+                    <ReactMarkdown>{post.shortDesc.markdown}</ReactMarkdown>
                     <Link className="text-start" to={`/news/${post.id}`}>
                       Læs mere
                     </Link>
