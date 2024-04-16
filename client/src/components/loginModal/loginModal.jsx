@@ -1,22 +1,25 @@
-import React, { useState, useEffect, useContext } from 'react'; // Add useContext to the import statement
+import React, { useState, useEffect, useContext } from 'react';
 import { createClient } from '@supabase/supabase-js';
 import { IoClose } from 'react-icons/io5';
-import AuthContext from '../../context/AuthContext'; // Assuming AuthContext.jsx is in the context folder
+import AuthContext from '../../context/AuthContext';
+import { useGetQuery } from "../../hooks/useGetQuery";
+import { getAllNews } from "../../queries/getAllNews";
 
 const supabaseUrl = "https://ggysbgyccjjuhinsjruj.supabase.co";
-const supabaseAnonKey =
-  "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImdneXNiZ3ljY2pqdWhpbnNqcnVqIiwicm9sZSI6ImFub24iLCJpYXQiOjE3MTMxNjIxODQsImV4cCI6MjAyODczODE4NH0.HTHwzuVzNehdRq_-OqJh_OozP1wDUqXY2XFTgnWmkdI";
+const supabaseAnonKey = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImdneXNiZ3ljY2pqdWhpbnNqcnVqIiwicm9sZSI6ImFub24iLCJpYXQiOjE3MTMxNjIxODQsImV4cCI6MjAyODczODE4NH0.HTHwzuVzNehdRq_-OqJh_OozP1wDUqXY2XFTgnWmkdI";
 const supabase = createClient(supabaseUrl, supabaseAnonKey);
 
 const LoginModal = ({ onClose }) => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const { isLoggedIn, userEmail, login, logout } = useContext(AuthContext);
+  const { data, isLoading, error } = useGetQuery(getAllNews, 'allNews');
 
   // Function to handle authentication state change
   const handleAuthStateChange = (event, session) => {
     if (session && session.user) {
-      login(session.user.email); // Use login function from AuthContext
+      login(session.user.email);
+      console.log("Logged in as:", session.user.email);
     } else {
       logout(); // Use logout function from AuthContext
     }
@@ -133,6 +136,12 @@ const LoginModal = ({ onClose }) => {
             >
               <IoClose />
             </button>
+          </div>
+        )}
+        {/* Display data fetched with master token */}
+        {isLoggedIn && !isLoading && !error && (
+          <div>
+            {/* Render your fetched data here */}
           </div>
         )}
       </div>

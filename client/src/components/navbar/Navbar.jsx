@@ -1,11 +1,9 @@
 import { useState } from "react";
 import { Link } from "react-router-dom";
 import { FaUser } from "react-icons/fa";
-import LoginModal from "../loginModal/loginModal";
 
 const Navbar = () => {
   const [isOpen, setIsOpen] = useState(false);
-  const [isModalOpen, setIsModalOpen] = useState(false);
 
   return (
     <div>
@@ -53,12 +51,11 @@ const Navbar = () => {
           <span className="h-6 w-[2px] bg-black"></span>
         </ul>
         <div className="flex justify-self-end mr-32 items-center">
-          <div
-            className="text-2xl mr-3 lg:mr-0 text-[#C52525] cursor-pointer"
-            onClick={() => setIsModalOpen(true)}
-          >
-            <FaUser />
-          </div>
+          <Link to="/loginPage">
+            <div className="text-2xl mr-3 lg:mr-0 text-[#C52525] cursor-pointer">
+              <FaUser />
+            </div>
+          </Link>
           <button
             className="lg:hidden block"
             onClick={() => setIsOpen(!isOpen)}
@@ -87,7 +84,6 @@ const Navbar = () => {
           </button>
         </div>
       </div>
-      {isModalOpen && <LoginModal onClose={() => setIsModalOpen(false)} />}
     </div>
   );
 };
