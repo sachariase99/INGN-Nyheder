@@ -4,9 +4,8 @@ import AuthContext from "../../context/AuthContext";
 import { useGetQuery } from "../../hooks/useGetQuery";
 import { getAllNews } from "../../queries/getAllNews";
 
-const supabaseUrl = "https://ggysbgyccjjuhinsjruj.supabase.co";
-const supabaseAnonKey =
-  "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImdneXNiZ3ljY2pqdWhpbnNqcnVqIiwicm9sZSI6ImFub24iLCJpYXQiOjE3MTMxNjIxODQsImV4cCI6MjAyODczODE4NH0.HTHwzuVzNehdRq_-OqJh_OozP1wDUqXY2XFTgnWmkdI";
+const supabaseUrl = import.meta.env.VITE_SUPABASE_URL;
+const supabaseAnonKey = import.meta.env.VITE_SUPABASE_ANON_KEY;
 const supabase = createClient(supabaseUrl, supabaseAnonKey);
 
 const LoginPage = () => {
