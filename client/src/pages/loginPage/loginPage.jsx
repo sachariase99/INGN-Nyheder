@@ -1,29 +1,34 @@
 import React, { useState, useEffect, useContext } from "react";
-import { createClient } from "@supabase/supabase-js";
-import AuthContext from "../../context/AuthContext";
-import { useGetQuery } from "../../hooks/useGetQuery";
-import { getAllNews } from "../../queries/getAllNews";
+import { createClient } from "@supabase/supabase-js"; // Supabase klient til autentificering
+import AuthContext from "../../context/AuthContext"; // Kontekst for autentificering
+import { useGetQuery } from "../../hooks/useGetQuery"; // Brugerdefineret hook til at foretage GraphQL-forespørgsler
+import { getAllNews } from "../../queries/getAllNews"; // GraphQL-forespørgsel for at hente alle nyheder
 
+// URL og nøgle til Supabase klienten
 const supabaseUrl = import.meta.env.VITE_SUPABASE_URL;
 const supabaseAnonKey = import.meta.env.VITE_SUPABASE_ANON_KEY;
 const supabase = createClient(supabaseUrl, supabaseAnonKey);
 
+// Login-siden komponent
 const LoginPage = () => {
+  // State til email og password inputs
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  // Henter isLoggedIn og userEmail fra AuthContext
   const { isLoggedIn, userEmail, login, logout } = useContext(AuthContext);
+  // Bruger brugerdefineret hook til at hente nyhedsdata
   const { data, isLoading, error } = useGetQuery(getAllNews, "allNews");
 
-  // Function to handle authentication state change
+  // Funktion til at håndtere ændringer i autentificeringsstatus
   const handleAuthStateChange = (event, session) => {
     if (session && session.user) {
       login(session.user.email);
     } else {
-      logout(); // Use logout function from AuthContext
+      logout(); // Brug logout-funktionen fra AuthContext
     }
   };
 
-  // Attach event listener when component mounts
+  // Tilføj event listener når komponenten monteres
   useEffect(() => {
     if (!supabase.auth) {
       console.error(
@@ -36,6 +41,7 @@ const LoginPage = () => {
     }
   }, []);
 
+  // Funktion til at logge ud
   const handleLogout = async () => {
     try {
       await supabase.auth.signOut();
@@ -44,6 +50,7 @@ const LoginPage = () => {
     }
   };
 
+  // Funktion til at håndtere login-formular submission
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
@@ -69,8 +76,10 @@ const LoginPage = () => {
     }
   };
 
+  // Rendere login-siden
   return (
     <div className="bg-white p-4 rounded-xl h-[50vh] mb-8 mx-8 relative">
+      {/* Hvis brugeren er logget ind, vises en logget ind besked */}
       {isLoggedIn ? (
         <div className="w-1/2 absolute left-1/2 -translate-x-1/2 top-10">
           <h2 className="flex justify-start text-2xl font-bold mb-12">
@@ -92,6 +101,7 @@ const LoginPage = () => {
           </div>
         </div>
       ) : (
+        // Hvis brugeren ikke er logget ind, vises login-formularen
         <div className="w-1/2 absolute left-1/2 -translate-x-1/2 top-10">
           <h2 className="text-2xl font-bold mb-12">Login</h2>
           <form onSubmit={handleSubmit} className="flex flex-col">
@@ -119,10 +129,6 @@ const LoginPage = () => {
             </button>
           </form>
         </div>
-      )}
-      {/* Display data fetched with master token */}
-      {isLoggedIn && !isLoading && !error && (
-        <div>{/* Render your fetched data here */}</div>
       )}
     </div>
   );
